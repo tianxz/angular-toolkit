@@ -1,5 +1,57 @@
-<table>
-    <tr>
-        <td></td>
-    </tr>
-</table>
+<style>
+    .dept-fence {
+        min-width: 250px;
+        min-height: 50px;
+        max-height: 270px;
+        padding: 2px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        /*border-right: 1px solid #AAA;*/
+    }
+
+    .dept {
+        overflow-x: auto;
+    }
+
+    .dept-root .alert {
+        margin-top: 10px;
+    }
+
+    .dept-root .alert .label {
+        margin-right: 10px;
+        display: inline-block;
+    }
+
+    .dept-tab td {
+        vertical-align: top;
+    }
+
+    .dept-fence .checkbox {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .dept-fence .radio {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+</style>
+<div class="dept-root">
+    <div id="DEPT_FENCE_CONTAINER__ID" class="dept">
+        <table class="dept-tab">
+            <tr>
+                <td ng-repeat="idx in fenceIdxs">
+                    <div at-dept-fence offset index='idx'></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <div class="alert {{singleSelect ? 'alert-success' : 'alert-info'}} {{ selectItems.length > 0 ?'alert-padding-bottom' : ''}}">
+            <strong ng-if="!singleSelect">已选中项(多选): </strong>
+            <strong ng-if="singleSelect">已选中项(单选): </strong>
+            <br ng-if="!singleSelect">
+            <span ng-repeat="item in selectItems" class="label label-default">{{item.name}}</span>
+        </div>
+    </div>
+</div>

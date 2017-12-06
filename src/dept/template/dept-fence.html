@@ -1,3 +1,16 @@
-<div>
-    <span>集团</span>
+<div class="dept-fence">
+    <div class="list-group">
+        <div ng-repeat="fence in fenceList" href="" class="list-group-item" ng-class="{active: fence.active}" ng-click="selected(index, fence)">
+            <div ng-if="singleSelect" class="radio">
+                <label>
+                    <input type="radio" name="fence-item" ng-value="fence" ng-change="itemSelectChange(fence)" ng-model="selectSingleItem.val"> {{fence.name}}
+                </label>
+            </div>
+            <div ng-if="!singleSelect" class="checkbox">
+                <label>
+                    <input type="checkbox" ng-change="itemSelectChange(fence)" ng-model="fence.checked"> {{fence.name}}
+                </label>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="vendors/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+    <script src="vendors/jquery/jquery.js"></script>
+    <script src="vendors/angular/angular.js"></script>
+    <script src="vendors/angular-toolkit/angular-toolkit.js"></script>
+    <script src="scripts/root.js"></script>
+</head>
+<body>
+<div ng-app="at.dept.demo" ng-controller="atDemoController" style="width: 500px;">
+    <div at-dept dept-source="source" ng-model="selectItems" dept-options="{fenceMaxTotal: 5, singleSelect: false}"></div>
+    <hr>
+    <button ng-click="initData1()" class="btn btn-primary">数据 I</button>
+    <button ng-click="initData2()" class="btn btn-primary">数据 II</button>
+    <button ng-click="initData3()" class="btn btn-primary">数据 III</button>
+    <hr>
+    <!--<at-dept dept-source="source3" ng-model="a"></at-dept>-->
+</div>
+</body>
+</html>
