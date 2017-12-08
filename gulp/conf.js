@@ -1,6 +1,5 @@
 var gulpUtil = require('gulp-util');
 var path = require('path');
-var vendorPath = 'node_modules';
 
 exports.version = {
     default: '1.0.0-dev'
@@ -11,11 +10,12 @@ exports.version = {
  */
 exports.paths = {
     src: 'src',
-    dist: 'release',
+    dist: 'dist',
     tmp: '.tmp',
     serve: 'serve',
     demo: 'misc/demo',
-    vendor: 'vendors'
+    vendor: 'vendors',
+    nodeModules: 'node_modules'
 };
 
 /**
@@ -24,23 +24,34 @@ exports.paths = {
  * @type {{angular: {codeStyle: string, dir: string}, bootstrap: {codeStyle: string, dir: string, excludes: [string]}}}
  */
 exports.vendors = {
-    angular: {
+    'angular': {
         src: [
-            path.join(vendorPath, 'angular', 'angular.js'),
-            path.join(vendorPath, 'angular', 'angular.min.js')
+            path.join(exports.paths.nodeModules, 'angular', 'angular.js'),
+            path.join(exports.paths.nodeModules, 'angular', 'angular.min.js')
         ]
     },
-    bootstrap: {
+    'bootstrap': {
         src: [
-            path.join(vendorPath, 'bootstrap', 'dist/**'),
-            '!' + path.join(vendorPath, 'bootstrap', 'dist/js/'),
-            '!' + path.join(vendorPath, 'bootstrap', 'dist/js/**')
+            path.join(exports.paths.nodeModules, 'bootstrap', 'dist/**'),
+            '!' + path.join(exports.paths.nodeModules, 'bootstrap', 'dist/js/'),
+            '!' + path.join(exports.paths.nodeModules, 'bootstrap', 'dist/js/**')
         ]
     },
-    jquery: {
+    'jquery': {
         src: [
-            path.join(vendorPath, 'jquery', 'dist/jquery.js'),
-            path.join(vendorPath, 'jquery', 'dist/jquery.min.js'),
+            path.join(exports.paths.nodeModules, 'jquery', 'dist/jquery.js'),
+            path.join(exports.paths.nodeModules, 'jquery', 'dist/jquery.min.js'),
+        ]
+    },
+    'angular-ui-bootstrap': {
+        src: [
+            path.join(exports.paths.nodeModules, 'angular-ui-bootstrap/dist/**'),
+            '!' + path.join(exports.paths.nodeModules, 'angular-ui-bootstrap/dist/ui-bootstrap.js')
+        ]
+    },
+    'angular-toolkit': {
+        src: [
+            path.join(exports.paths.dist, '/**')
         ]
     }
 };

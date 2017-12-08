@@ -5,9 +5,10 @@
         .module('angular.toolkit.dept', [ 'angular.toolkit.utils', 'at/template/cache' ])
         .constant('config', {
             fenceMaxTotal: 3,
-            singleSelect: true
+            singleSelect: true,
+            parentKey: 'parent'
         })
-        .controller('atDeptController', function (config, $scope, atUtilService) {
+        .controller('atDeptController', function (config, $scope, atUtil) {
             var self = this;
             var scope = $scope;
 
@@ -61,7 +62,7 @@
                 scope.selectItems = [];
                 self.selectSingleItem.val = null;
                 if ( self.singleSelect ) {
-                    var items = includeItemsAtSource(scope.deptSource, scope.ngModel);
+                    var items = includeItemsAtSource(self.deptSource, scope.ngModel);
                     if ( items.length > 0 ) {
                         self.selectSingleItem.val = items[ items.length - 1 ];
                     }
@@ -69,12 +70,12 @@
                         scope.selectItems.push(self.selectSingleItem.val);
                     }
                 } else {
-                    scope.selectItems = includeItemsAtSource(scope.deptSource, scope.ngModel, function (item) {
+                    scope.selectItems = includeItemsAtSource(self.deptSource, scope.ngModel, function (item) {
                         item.checked = true;
                     });
                 }
 
-                var treeData = atUtilService.TwoD2Tree(newValue ? newValue : scope.deptSource, 'parent');   //转换二维数据为tree data
+                var treeData = atUtil.TwoD2Tree(newValue ? newValue : self.deptSource, self.parentKey);   //转换二维数据为tree data
                 self.source = treeData;
                 if ( newValue ) {
                     self.refreshFenceView(0, self.source);   //根据新数据重新渲染view
@@ -82,9 +83,7 @@
             };
 
             /**
-             * 刷新当前选中的项
-             * 1. 清空选中项
-             * 2. 根据套件模式(单选/多选)设置选中的项
+             * checkbox or radio at item of fence changed.
              */
             self.itemSelectChange = function () {
                 scope.selectItems = [];
@@ -94,10 +93,23 @@
                         scope.selectItems.push(self.selectSingleItem.val);
                     }
                 } else {
-                    angular.forEach(scope.deptSource, function (item) {
+                    angular.forEach(self.deptSource, function (item) {
                         if ( item.checked ) scope.selectItems.push(item);
                     });
                 }
+
+                var viewValue = [];
+                angular.forEach(scope.selectItems, function (item) {
+                    viewValue.push(item.value);
+                });
+                self.ngModelCtrl.$setViewValue(viewValue);
+                self.ngModelCtrl.$render();
+            };
+
+            self.initDeptSource = function (deptSource) {
+                self.deptSource = [];
+                angular.copy(deptSource, self.deptSource);
+                return self.deptSource;
             };
 
             self.initFence = function (index, ctrl) {
@@ -127,7 +139,7 @@
                 }
             };
         })
-        .controller('atDeptFenceController', function ($scope, atUtilService) {
+        .controller('atDeptFenceController', function ($scope, atUtil) {
             var self = this;
             self.scope = $scope;
             /**
@@ -152,9 +164,14 @@
                 self.scope.selectSingleItem = self.selectSingleItem;
             };
 
+            /**
+             * item of fence changed
+             * @param index
+             * @param item
+             */
             self.scope.selected = function (index, item) {
                 self.refreshFenceView(index + 1, item.children);
-                atUtilService.flushStatus(self.fenceList, 'active');
+                atUtil.flushStatus(self.fenceList, 'active');
                 item.active = true;
             };
         })
@@ -163,7 +180,7 @@
                 templateUrl: function (element, attrs) {
                     return attrs.templateUrl || 'at/dept/template/dept.html';
                 },
-                require: [ 'atDept' ],
+                require: [ 'atDept', 'ngModel' ],
                 controller: 'atDeptController',
                 scope: {
                     deptSource: '=',
@@ -173,11 +190,17 @@
                 restrict: 'AE',
                 link: function (scope, element, attrs, ctrls) {
                     if ( scope.deptSource && !angular.isArray(scope.deptSource) ) throw Error('dept-source 数据源类型必须为数组');
+
+                    var ele = $(element);
                     var atDeptCtrl = ctrls[ 0 ];
-                    atDeptCtrl.refreshData();
-                    scope.$watch('deptSource', function (newValue, oldValue) {
-                        atDeptCtrl.refreshData(newValue ? newValue : []);
-                        scope.$broadcast('AT_DEPT_REFRESH__BROADCAST');
+
+                    atDeptCtrl.ngModelCtrl = ctrls[ 1 ];
+
+                    scope.$watch('deptSource', function (newValue) {
+                        var deptSource = atDeptCtrl.initDeptSource(newValue);
+                        atDeptCtrl.refreshData(deptSource ? atDeptCtrl.deptSource : []);
+
+                        ele.find('.dept').scrollLeft(0);
                     });
                 }
             };
@@ -213,11 +236,8 @@
                     ele.click(function () {
                         if ( index < fenceCtrl.fenceMaxTotal ) {
                             var width = ele.width();
-                            $('#DEPT_FENCE_CONTAINER__ID').scrollLeft(width * index);
+                            ele.parents('.dept').scrollLeft(width * 0.8 * index);
                         }
-                    });
-                    scope.$on('AT_DEPT_REFRESH__BROADCAST', function () {
-                        $('#DEPT_FENCE_CONTAINER__ID').scrollLeft(0);
                     });
                 }
             }

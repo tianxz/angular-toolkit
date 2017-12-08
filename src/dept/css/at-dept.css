@@ -1,0 +1,57 @@
+/*region at-dept*/
+.at-dept-fence {
+    min-width: 250px;
+    min-height: 50px;
+    max-height: 270px;
+    padding: 2px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.at-dept {
+    overflow-x: auto;
+}
+
+.at-dept-root .alert {
+    margin-top: 10px;
+}
+
+.at-dept-root .alert .label {
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.at-dept-tab td {
+    vertical-align: top;
+}
+
+.at-dept-fence .checkbox {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.at-dept-fence .radio {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+/*endregion*/
+
+/*region at-dept-search*/
+.at-dept-search.dropdown-menu {
+    margin-top: 1px;
+    display: block;
+    width: 100%;
+}
+.at-dept-search li {
+    padding: 3px 20px;
+}
+.at-dept-search span {
+    display: inline-block;
+}
+.at-dept-search .divider {
+    padding: 0;
+}
+.at-dept-search .checkbox {
+    margin: 0;
+}
+/*endregion*/

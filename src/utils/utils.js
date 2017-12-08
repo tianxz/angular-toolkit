@@ -3,7 +3,7 @@
 
     angular
         .module('angular.toolkit.utils', [])
-        .service('atUtilService', function () {
+        .service('atUtil', function () {
             var transformTo2Dimension = function (source, node, parent, parentKey) {
                 angular.forEach(source, function (item) {
                     if ( item[ parentKey ] == parent ) {
