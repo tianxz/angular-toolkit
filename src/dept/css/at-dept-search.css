@@ -1,0 +1,22 @@
+/*region at-dept-search*/
+.at-dept-search.dropdown-menu {
+    margin-top: 1px;
+    display: none;
+    width: 100%;
+}
+.at-dept-search.dropdown-menu.active {
+    display: block;
+}
+.at-dept-search li {
+    padding: 3px 20px;
+}
+.at-dept-search span {
+    display: inline-block;
+}
+.at-dept-search .divider {
+    padding: 0;
+}
+.at-dept-search .checkbox {
+    margin: 0;
+}
+/*endregion*/

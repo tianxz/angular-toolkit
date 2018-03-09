@@ -1,6 +1,6 @@
 <div class="dropdown">
-    <input type="text" class="form-control" placeholder="Search">
-    <ul class="at-dept-search dropdown-menu">
+    <input type="text" class="form-control" placeholder="Search" ng-focus="focus = true">
+    <ul class="at-dept-search dropdown-menu" ng-class="{'active': focus}">
         <li>
             <div>
                 <span class="label label-primary">DEPT1</span>

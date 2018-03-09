@@ -1,4 +1,3 @@
-var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
 var browserSync = require('browser-sync');
@@ -23,6 +22,6 @@ browserSync.use(browserSyncSpa({
     selector: '[ng-app]'// Only needed for angular apps
 }));
 
-gulp.task('serve', ['watch'], function () {
-    browserSyncInit([path.join(conf.paths.tmp, conf.paths.serve), conf.paths.demo]);
+gulp.task('serve', [ 'watch' ], function () {
+    browserSyncInit([ conf.paths.demo, conf.paths.dist ]);
 });

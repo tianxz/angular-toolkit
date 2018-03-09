@@ -1,21 +1,27 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('./conf');
-var util = require('util');
-var fs = require('fs');
 var merger = require('merge-stream');
+var del = require('del');
 
 var $ = require('gulp-load-plugins')({
     pattern: [ 'gulp-*', 'main-bower-files', 'uglify-save-license', 'del', 'merge-stream' ]
 });
 
-gulp.task('copy', [ 'copy-vendor' ]);
-gulp.task('build', [ 'copy', 'build-concat' ]);
+gulp.task('build-css', function () {
+    var css = gulp
+        .src([ path.join(conf.paths.src, '/**/*.css') ])
+        .pipe($.concat('angular-toolkit.css'))
+        .pipe(gulp.dest(path.join(conf.paths.tmp, 'at-css')));
 
-/**
- * 转换 template html 为 angular cache
- */
-gulp.task('build-toolkit', function () {
+    merger(css)
+        .pipe(gulp.dest(path.join(conf.paths.dist, 'css')))
+});
+
+gulp.task('build-at', [ 'build-css' ], function () {
+    /**
+     * 转换 template html 为 angular cache
+     */
     var templates = gulp
         .src([ path.join(conf.paths.src, '/**/template/*.html') ])
         .pipe($.debug({ title: 'build-template' }))
@@ -32,19 +38,16 @@ gulp.task('build-toolkit', function () {
         .pipe($.concat('angular-toolkit-tmp.js'))
         .pipe(gulp.dest(path.join(conf.paths.tmp, 'at-scripts')));
 
-    gulp
-        .src([ path.join(conf.paths.src, '/**/*.css') ])
-        .pipe($.concat('angular-toolkit.css'))
-        .pipe(gulp.dest(path.join(conf.paths.dist, 'css')));
-
     merger(templates, toolkit)
         .pipe($.concat('angular-toolkit.js'))
         .pipe(gulp.dest(path.join(conf.paths.dist)));
 });
 
-gulp.task('build', [ 'build-toolkit', 'copy-vendor' ], function () {
-
+gulp.task('cleared', function () {
+    return del([ 'dist' ])
 });
+
+gulp.task('build', [ 'build-at', 'copy-vendor' ]);
 
 gulp.task('copy-vendor', function () {
     for ( var name in conf.vendors ) {

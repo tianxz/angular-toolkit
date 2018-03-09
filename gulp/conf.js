@@ -48,11 +48,6 @@ exports.vendors = {
             path.join(exports.paths.nodeModules, 'angular-ui-bootstrap/dist/**'),
             '!' + path.join(exports.paths.nodeModules, 'angular-ui-bootstrap/dist/ui-bootstrap.js')
         ]
-    },
-    'angular-toolkit': {
-        src: [
-            path.join(exports.paths.dist, '/**')
-        ]
     }
 };
 
