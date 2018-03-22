@@ -15,6 +15,7 @@
 
     <script src="scripts/dept-demo.js"></script>
     <script src="scripts/dept-search-demo.js"></script>
+    <script src="scripts/number-demo.js"></script>
     <script src="scripts/index.js"></script>
 
     <style>
@@ -31,6 +32,7 @@
 <div class="container">
     <a href="#AT_DEPT_DEMO__ID">Dept</a>
     <a href="#AT_DEPT_SEARCH_DEMO__ID">DeptSearch</a>
+    <a href="#AT_NUMBER_DEMO__ID">Number</a>
     <!--region at.dept.demo-->
     <section id="AT_DEPT_DEMO__ID">
         <div ng-controller="atDeptDemoController">
@@ -180,6 +182,76 @@
         </div>
     </section>
     <!--endregion-->
+
+    <!--at.number.demo-->
+    <section id="AT_NUMBER_DEMO__ID">
+        <div ng-controller="atNumberDemoController">
+            <div class="panel panel-primary">
+                <div class="panel-heading">AT-NUMBER 数字控件</div>
+                <div class="panel-body">
+                    <div>
+                        <!--region AT-DEPT VIEWER-->
+                        <div class="col-lg-6">
+                            <h2>VIEWER</h2>
+                            <hr>
+                            <at-number at-value="obj" at-placeholder="{{placeholder}}" at-digit="2"></at-number>
+                            <hr>
+                            <div class="alert alert-info">当前值: {{obj ? obj : 'Null'}}</div>
+                        </div>
+                        <!--endregion-->
+
+                        <!--region AT-DEPT ATTRIBUTE-->
+                        <div class="col-lg-6">
+                            <h2>ATTRIBUTE</h2>
+                            <hr>
+                            <table class="table table-attr">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Def</th>
+                                    <th>Type</th>
+                                    <th colspan="3">Describe</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><em>atValue</em></td>
+                                    <td><code>undefined</code></td>
+                                    <td><span class="label label-success">object</span></td>
+                                    <td colspan="3">
+                                        <small>设置控件的值</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><em>atDigit</em></td>
+                                    <td><code>0</code></td>
+                                    <td><span class="label label-success">Number</span></td>
+                                    <td colspan="3">
+                                        <small>保留小数位数</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><em>atPlaceholder</em></td>
+                                    <td><code>null</code></td>
+                                    <td><span class="label label-success">String</span></td>
+                                    <td colspan="3">
+                                        <small>控件输入提示</small>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--endregion-->
+                    </div>
+                    <div class="col-lg-12">
+                        <h2>CODE</h2>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--at.number.demo-->
 </div>
 </body>
 </html>
