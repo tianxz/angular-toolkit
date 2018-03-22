@@ -3,6 +3,8 @@ var gulp = require('gulp');
 var conf = require('./conf');
 var merger = require('merge-stream');
 var del = require('del');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
 
 var $ = require('gulp-load-plugins')({
     pattern: [ 'gulp-*', 'main-bower-files', 'uglify-save-license', 'del', 'merge-stream' ]
@@ -42,13 +44,21 @@ gulp.task('build-at', [ 'build-css' ], function () {
         .pipe(gulp.dest(path.join(conf.paths.tmp, 'at-templates')));
 
     var toolkit = gulp
-        .src([ path.join(conf.paths.src, '/*/*.js') ])
+        .src([ path.join(conf.paths.src, '/**/*.js') ])
         .pipe($.debug({ title: 'build-toolkit' }))
         .pipe($.concat('angular-toolkit-tmp.js'))
         .pipe(gulp.dest(path.join(conf.paths.tmp, 'at-scripts')));
 
     merger(templates, toolkit)
         .pipe($.concat('angular-toolkit.js'))
+        .pipe(gulp.dest(path.join(conf.paths.dist)));
+});
+
+gulp.task('compile-js', ['build-at'], function () {
+    gulp
+        .src([ path.join(conf.paths.dist, '/*.js'), '!' + path.join(conf.paths.dist, '/*.min.js') ])
+        .pipe(rename({ suffix: '.min' }))
+        //.pipe(uglify())
         .pipe(gulp.dest(path.join(conf.paths.dist)));
 });
 

@@ -72,7 +72,8 @@
                 scope: {
                     atValue: '=?',
                     atPlaceholder: '@',
-                    atDigit: '@'
+                    atDigit: '@',
+                    atClass: '=?'
                 },
                 link: function (scope) {
                 }
