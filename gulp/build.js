@@ -72,7 +72,7 @@ gulp.task('cleared', function () {
 /**
  * 执行 build-at和copy-vendor 任务
  */
-gulp.task('build', [ 'build-at', 'copy-vendor' ]);
+gulp.task('build', [ 'build-at', 'compile-js', 'copy-vendor' ]);
 
 /**
  * 拷贝 node_modules/ 目录下的第三方js库到 misc/demo/vendors, 第三方库路径配置在 conf.js 中
