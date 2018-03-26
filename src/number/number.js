@@ -29,6 +29,9 @@
 
             $scope.onBlur = function () {
                 var val = $scope.atValue;
+                if ( $scope.atValue < $scope.atMinValue ) {
+                    val = $scope.atMinValue;
+                }
                 var digit = parseInt($scope.atDigit);
                 $scope.atValue = parseFloat(cutFloat(val, digit));
             };
@@ -45,6 +48,10 @@
                     var value = newValue + '';
                     if ( value.length > 16 ) {
                         $scope.atValue = oldValue;
+                        return;
+                    }
+                    if ( value > $scope.atMaxValue ) {
+                        $scope.atValue = $scope.atMaxValue;
                         return;
                     }
                     if ( checkFloat(newValue) ) {
@@ -81,10 +88,12 @@
                     atClass: '=?',
                     atDisabled: '=?',
                     atRequired: '=?',
-                    atOnClick: '=?',
-                    atOnChange: '=?'
+                    atMaxValue: '=?',
+                    atMinValue: '=?',
+                    atOnClick: '&',
+                    atOnChange: '&'
                 },
-                link: function (scope, element) {
+                link: function (scope, element, attrs, ctrls) {
                     var input = element.children(input);
 
                     if ( scope.atOnChange ) {

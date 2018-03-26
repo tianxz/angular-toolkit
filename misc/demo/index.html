@@ -187,13 +187,13 @@
                             <h2>VIEWER</h2>
                             <hr>
                             <form>
-                                <at-number at-value="obj" at-class="{'form-control': true}"
+                                <div at-number at-value="obj" at-class="{'form-control': true}"
                                            at-placeholder="{{placeholder}}"
                                            at-digit="2"
-                                           at-required="atRequired"
-                                           at-on-change="atOnchange"
-                                           at-on-click="atOnClick"
-                                           at-disabled="false"></at-number>
+                                           at-required1="atRequired"
+                                           at-on-change="atOnChange()"
+                                           at-on-click="atOnClick()"
+                                           at-disabled="false"></div>
                                 <input type="submit" value="提交">
                                 <input type="button" ng-click="changeAtRequired()" value="必填: {{atRequired}}">
                             </form>
@@ -255,6 +255,22 @@
                                         <td><span class="label label-success">Boolean</span></td>
                                         <td colspan="3">
                                             <small>是否禁用</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>atMaxValue</em></td>
+                                        <td><code>null</code></td>
+                                        <td><span class="label label-success">Number</span></td>
+                                        <td colspan="3">
+                                            <small>最大值</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><em>atMinValue</em></td>
+                                        <td><code>null</code></td>
+                                        <td><span class="label label-success">Number</span></td>
+                                        <td colspan="3">
+                                            <small>最小值</small>
                                         </td>
                                     </tr>
                                     </tbody>
