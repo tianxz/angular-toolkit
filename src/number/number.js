@@ -26,23 +26,27 @@
             atDigit: 0
         })
         .controller('_atNumberController_', function ($scope, config) {
-            if ( !$scope.atDigit ) {
-                $scope.atDigit = config.atDigit;
-            }
 
-            $scope.focus = function () {
+            $scope.onBlur = function () {
                 var val = $scope.atValue;
                 var digit = parseInt($scope.atDigit);
                 $scope.atValue = parseFloat(cutFloat(val, digit));
             };
 
+            if ( !$scope.atDigit ) {
+                $scope.atDigit = config.atDigit;
+            }
 
             $scope.$watch(
                 function () {
                     return $scope.atValue;
                 },
-                function (newValue) {
+                function (newValue, oldValue) {
                     var value = newValue + '';
+                    if ( value.length > 16 ) {
+                        $scope.atValue = oldValue;
+                        return;
+                    }
                     if ( checkFloat(newValue) ) {
                         var arr = value.split('.');
                         if ( arr.length >= 2 ) {
@@ -67,15 +71,28 @@
                 templateUrl: function (element, attrs) {
                     return attrs.templateUrl || 'at/number/template/number.html';
                 },
+                require: [ 'atNumber' ],
                 controller: '_atNumberController_',
                 restrict: 'AE',
                 scope: {
                     atValue: '=?',
                     atPlaceholder: '@',
                     atDigit: '@',
-                    atClass: '=?'
+                    atClass: '=?',
+                    atDisabled: '=?',
+                    atRequired: '=?',
+                    atOnClick: '=?',
+                    atOnChange: '=?'
                 },
-                link: function (scope) {
+                link: function (scope, element) {
+                    var input = element.children(input);
+
+                    if ( scope.atOnChange ) {
+                        input.bind('change', scope.atOnChange);
+                    }
+                    if ( scope.atOnClick ) {
+                        input.bind('click', scope.atOnClick);
+                    }
                 }
             }
         })

@@ -1,1 +1,9 @@
-<input type="text" ng-model="atValue" ng-class="atClass" ng-blur="focus()" placeholder="{{atPlaceholder}}">
+<input type="text"
+       ng-model="atValue"
+       ng-class="atClass"
+       ng-blur="onBlur()"
+       placeholder="{{atPlaceholder}}"
+       ng-required="atRequired"
+       ng-change="atOnChange"
+       ng-click="atOnClick"
+       ng-disabled="atDisabled">
