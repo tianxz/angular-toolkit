@@ -3,22 +3,22 @@
 
     angular
         .module('angular.toolkit.dept', [ 'angular.toolkit.utils', 'at/template/cache' ])
-        .constant('config', {
+        .constant('atDeptConfig', {
             fenceMaxTotal: 3,
             singleSelect: true,
             parentKey: 'parent'
         })
-        .controller('atDeptController', function (config, $scope, atUtil) {
+        .controller('atDeptController', function (atDeptConfig, $scope, atUtil) {
             var self = this;
             var scope = $scope;
 
-            //region init config parameter
-            for ( var attr in config ) {
+            //region init atDeptConfig parameter
+            for ( var attr in atDeptConfig ) {
                 if ( scope.deptOptions && scope.deptOptions.hasOwnProperty(attr) ) {
                     self[ attr ] = scope.deptOptions[ attr ];
                     scope[ attr ] = self[ attr ];
                 } else {
-                    self[ attr ] = config[ attr ];
+                    self[ attr ] = atDeptConfig[ attr ];
                     scope[ attr ] = self[ attr ];
                 }
             }
@@ -126,7 +126,7 @@
                 var ctrlName = self.fenceCtrlName + '_' + index;
 
                 //region 清空index之后的fence数据源
-                for ( var i = index; i <= config.fenceMaxTotal; i++ ) {
+                for ( var i = index; i <= atDeptConfig.fenceMaxTotal; i++ ) {
                     var tmpCtrlName = self.fenceCtrlName + '_' + i;
                     if ( self.ctrls.hasOwnProperty(tmpCtrlName) ) {
                         self.ctrls[ tmpCtrlName ]._refreshView({ fi: index, source: null });

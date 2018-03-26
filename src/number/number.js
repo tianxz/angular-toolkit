@@ -22,10 +22,10 @@
 
     angular
         .module('angular.toolkit.number', [ 'at/template/cache' ])
-        .constant('config', {
+        .constant('atNumberConfig', {
             atDigit: 0
         })
-        .controller('_atNumberController_', function ($scope, config) {
+        .controller('_atNumberController_', function ($scope, atNumberConfig) {
 
             $scope.onBlur = function () {
                 var val = $scope.atValue;
@@ -37,7 +37,7 @@
             };
 
             if ( !$scope.atDigit ) {
-                $scope.atDigit = config.atDigit;
+                $scope.atDigit = atNumberConfig.atDigit;
             }
 
             $scope.$watch(
